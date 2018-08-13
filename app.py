@@ -44,7 +44,7 @@ def add_record():
 
 
 @app.route("/record", methods=['GET'])
-def get_record():
+def get_records():
     records = Record.query.all()
     records_json = json.dumps(
         [
