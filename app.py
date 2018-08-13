@@ -1,6 +1,4 @@
-import json
-
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -27,7 +25,7 @@ def hello():
     return "Hello World!"
 
 
-@app.route("/name")
+@app.route("/name/")
 def name():
     return "Hello Frank"
 
@@ -46,19 +44,15 @@ def add_record():
 @app.route("/record", methods=['GET'])
 def get_records():
     records = Record.query.all()
-    records_json = json.dumps(
-        [
-            {
-                'id': record.id,
-                'name': record.name,
-                'cost': record.cost
-            }
-            for record in records
-        ],
-        indent=4,
-        ensure_ascii=False
-    )
-    return records_json, 200
+    records_data = [
+        {
+            'id': record.id,
+            'name': record.name,
+            'cost': record.cost
+        }
+        for record in records
+    ]
+    return jsonify(records_data), 200
 
 
 @app.route("/record", methods=["PUT"])
