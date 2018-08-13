@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -28,3 +30,43 @@ def hello():
 @app.route("/name")
 def name():
     return "Hello Frank"
+
+
+@app.route("/record", methods=['POST'])
+def add_record():
+    record = Record(name='breakfast', cost=70)
+    db.session.add(record)
+    db.session.commit()
+    return 'Create Succeeded', 200
+
+
+@app.route("/record", methods=['GET'])
+def get_record():
+    records = Record.query.all()
+    records_json = json.dumps(
+        [
+            {
+                'id': record.id,
+                'name': record.name,
+                'cost': record.cost
+            }
+            for record in records
+        ],
+        indent=4,
+        ensure_ascii=False
+    )
+    return records_json, 200
+
+
+@app.route("/record", methods=["PUT"])
+def update_record():
+    records = Record.query.filter_by(name='breakfast')
+    return 'Update Succeeded', 200
+
+
+@app.route("/record", methods=["DELETE"])
+def delete_record():
+    first_record = Record.query.filter_by(name='breakfast').first()
+    db.session.delete(first_record)
+    db.session.commit()
+    return 'Delete Succeeded', 200
