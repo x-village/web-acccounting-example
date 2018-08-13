@@ -55,6 +55,17 @@ def get_records():
     return jsonify(records_data), 200
 
 
+@app.route('/record/<int:record_id>', methods=['GET'])
+def get_record(record_id):
+    record = Record.query.filter_by(id=record_id).first()
+    record_data = {
+        'id': record.id,
+        'name': record.name,
+        'cost': record.cost
+    }
+    return jsonify(record_data), 200
+
+
 @app.route("/record", methods=["PUT"])
 def update_record():
     records = Record.query.filter_by(name='breakfast')
