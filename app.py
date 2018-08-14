@@ -66,10 +66,15 @@ def get_record(record_id):
     return jsonify(record_data), 200
 
 
-@app.route("/record", methods=["PUT"])
-def update_record():
-    records = Record.query.filter_by(name='breakfast')
-    return 'Update Succeeded', 200
+@app.route('/record/<int:record_id>', methods=['PUT'])
+def update_record(record_id):
+    req_data = request.form
+    record = Record.query.filter_by(id=record_id).first()
+    record.name = req_data['name']
+    record.cost = req_data['cost']
+    db.session.add(record)
+    db.session.commit()
+    return 'Create Succeeded', 200
 
 
 @app.route("/record", methods=["DELETE"])
