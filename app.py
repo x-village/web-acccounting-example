@@ -74,12 +74,12 @@ def update_record(record_id):
     record.cost = req_data['cost']
     db.session.add(record)
     db.session.commit()
-    return 'Create Succeeded', 200
+    return 'Update Succeeded', 200
 
 
-@app.route("/record", methods=["DELETE"])
-def delete_record():
-    first_record = Record.query.filter_by(name='breakfast').first()
-    db.session.delete(first_record)
+@app.route("/record/<int:record_id>", methods=["DELETE"])
+def delete_record(record_id):
+    record = Record.query.filter_by(id=record_id).first()
+    db.session.delete(record)
     db.session.commit()
     return 'Delete Succeeded', 200
