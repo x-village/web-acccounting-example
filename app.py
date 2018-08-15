@@ -35,7 +35,7 @@ def add_record():
     req_data = request.form
     name = req_data['name']
     cost = req_data['cost']
-    record = Record(name='breakfast', cost=70)
+    record = Record(name=name, cost=cost)
     db.session.add(record)
     db.session.commit()
     return 'Create Succeeded', 200
