@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -21,8 +21,8 @@ class Record(db.Model):
 
 # views
 @app.route("/")
-def hello():
-    return "Hello World!"
+def index():
+    return render_template('index.html')
 
 
 @app.route("/name/")
