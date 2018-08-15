@@ -1,7 +1,8 @@
 import pytest
 
 from app import app as _app
-from app import db, Record
+from app import db
+from models import Record
 
 
 @pytest.fixture
