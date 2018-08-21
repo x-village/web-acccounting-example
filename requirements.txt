@@ -3,3 +3,4 @@ Flask-Migrate==2.2.1
 Flask-SQLAlchemy==2.3.2
 pytest==3.5.1
 pytest-flask==0.10.0
+gunicorn==19.9.0
